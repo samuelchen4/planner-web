@@ -1,0 +1,8 @@
+name: planner-web
+description: planner-web on Google Cloud (Cloud Run serving the static site with nginx)
+runtime:
+  name: nodejs
+  options:
+    packagemanager: pnpm
+backend:
+  url: https://api.pulumi.com
