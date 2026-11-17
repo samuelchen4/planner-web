@@ -6,7 +6,7 @@ import { pendingUploads } from '@/db/database';
 import { CalendarView } from './calendar/calendar';
 import { HabitsView } from './habits/habits';
 import { CalendarIcon, HabitsIcon, ListsIcon } from './icons';
-import { ListsView } from './lists';
+import { ListsView } from './lists/lists';
 
 const VIEWS = {
   calendar: { label: 'Calendar', icon: <CalendarIcon /> },
@@ -65,13 +65,7 @@ export function App() {
         <main className="min-w-0 flex-1">
           {view === 'calendar' && <CalendarView />}
           {view === 'habits' && <HabitsView />}
-          {view === 'lists' && (
-            <div className="h-full overflow-y-auto">
-              <div className="mx-auto max-w-3xl px-8 py-10">
-                <ListsView />
-              </div>
-            </div>
-          )}
+          {view === 'lists' && <ListsView />}
         </main>
       </div>
     </div>

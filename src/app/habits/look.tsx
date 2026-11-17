@@ -4,7 +4,8 @@ import type { Task } from '@/db/schema';
 import { updateTask } from '@/db/tasks';
 
 import { Modal } from '../ui';
-import { edgeOf, HABIT_COLORS, HABIT_ICONS, habitLook } from './habit-look';
+import { edgeOf, NOTE_COLORS } from '../note-colors';
+import { HABIT_ICONS, habitLook } from './habit-look';
 
 export function HabitBadge({ habit, size = 32 }: { habit: Task; size?: number }) {
   const { Icon, edge } = habitLook(habit);
@@ -55,7 +56,7 @@ function LookPicker({ habit }: { habit: Task }) {
       <div className="space-y-3">
         <p className="text-footnote font-semibold uppercase text-muted">Colour</p>
         <div className="flex gap-3">
-          {HABIT_COLORS.map((c) => (
+          {NOTE_COLORS.map((c) => (
             <button
               key={c}
               type="button"

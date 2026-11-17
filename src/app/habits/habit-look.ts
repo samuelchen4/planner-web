@@ -22,7 +22,9 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-import type { Task, TaskColor } from '@/db/schema';
+import type { Task } from '@/db/schema';
+
+import { edgeOf, paperOf } from '../note-colors';
 
 export const HABIT_ICONS: [symbol: string, Icon: LucideIcon][] = [
   ['drop.fill', Droplet],
@@ -47,12 +49,7 @@ export const HABIT_ICONS: [symbol: string, Icon: LucideIcon][] = [
   ['star.fill', Star],
 ];
 
-export const HABIT_COLORS: TaskColor[] = ['yellow', 'orange', 'pink', 'lavender', 'blue'];
-
 const ICONS = new Map(HABIT_ICONS);
-
-export const paperOf = (color: TaskColor) => `var(--note-${color}-paper)`;
-export const edgeOf = (color: TaskColor) => `var(--note-${color}-edge)`;
 
 export function habitLook(habit: Task) {
   const color = habit.color ?? 'blue';
