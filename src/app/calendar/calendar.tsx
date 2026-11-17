@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -14,6 +15,7 @@ import { createTask, moveTask, scheduleTask, setTaskTime, unscheduleTask } from 
 import { addDays, dateKey, formatHour, MINUTES_PER_DAY, startOfWeek } from '@/lib/time';
 
 import { ChevronLeft, ChevronRight } from '../icons';
+import { TaskDialog } from '../task/task-dialog';
 import { bucketByDay, type CalendarItem } from './entries';
 import { HOUR_H, MIN_BLOCK_MIN, PX_PER_MIN } from './grid';
 import { Block, Chip } from './items';
@@ -159,6 +161,7 @@ export function CalendarView() {
   const [mode, setMode] = useState<Mode>('week');
   const [anchor, setAnchor] = useState(() => new Date());
   const [editing, setEditing] = useState<string | null>(null);
+  const [openId, setOpenId] = useState<string | null>(null);
   const [drag, setDrag] = useState<Drag | null>(null);
 
   const dragRef = useRef<Drag | null>(null);
@@ -225,7 +228,7 @@ export function CalendarView() {
       setDragState(null);
       if (!d) return;
       if (!d.moved) {
-        setEditing(d.id);
+        setOpenId(d.id);
         return;
       }
       suppressClick.current = true;
@@ -307,6 +310,7 @@ export function CalendarView() {
   };
 
   const endEdit = () => setEditing(null);
+  const closeTask = useCallback(() => setOpenId(null), []);
   const live = drag?.moved ? drag : null;
   const target = live?.target ?? null;
 
@@ -495,6 +499,7 @@ export function CalendarView() {
           </div>
         </div>
       </div>
+      {openId && <TaskDialog id={openId} onClose={closeTask} />}
     </div>
   );
 }

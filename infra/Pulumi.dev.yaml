@@ -1,4 +1,4 @@
 config:
   gcp:project: planner-514904
   gcp:region: us-east4
-  planner-web:imageTag: a019dd5-1245
+  planner-web:imageTag: 119d8d4-1925
