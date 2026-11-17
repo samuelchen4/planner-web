@@ -4,10 +4,12 @@ export function Check({
   done,
   onToggle,
   label,
+  size = 20,
 }: {
   done: boolean;
   onToggle: () => void;
   label: string;
+  size?: number;
 }) {
   return (
     <button
@@ -15,15 +17,21 @@ export function Check({
       role="checkbox"
       aria-checked={done}
       aria-label={label}
-      onClick={onToggle}
-      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
-        done ? 'border-done bg-done text-white' : 'border-subtle'
+      onPointerDown={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.stopPropagation();
+        onToggle();
+      }}
+      style={{ width: size, height: size }}
+      className={`flex shrink-0 items-center justify-center rounded-full ${
+        done ? 'bg-done text-on-accent' : 'border-[1.5px] border-accent bg-card'
       }`}
     >
       {done && (
         <svg
           viewBox="0 0 12 12"
-          className="h-3 w-3 fill-none stroke-current stroke-2"
+          className="fill-none stroke-current stroke-2"
+          style={{ width: size * 0.6, height: size * 0.6 }}
           aria-hidden="true"
         >
           <path d="M2.5 6.5l2.2 2.2L9.5 3.8" />
@@ -84,17 +92,6 @@ export function TitleInput({
       }}
       className={`min-w-0 flex-1 bg-transparent text-body outline-none ${done ? 'text-muted line-through' : 'text-ink'}`}
     />
-  );
-}
-
-export function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="space-y-2">
-      <h2 className="px-1 text-footnote font-semibold uppercase tracking-wide text-muted">
-        {title}
-      </h2>
-      {children}
-    </section>
   );
 }
 
