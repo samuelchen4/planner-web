@@ -1,5 +1,13 @@
 const plugin = require('tailwindcss/plugin');
-const { themeVariables } = require('./design/tokens.cjs');
+const { noteColors, themeVariables } = require('./design/tokens.cjs');
+
+const noteVariables = (scheme) =>
+  Object.fromEntries(
+    Object.entries(noteColors[scheme]).flatMap(([name, c]) => [
+      [`--note-${name}-paper`, c.paper],
+      [`--note-${name}-edge`, c.edge],
+    ]),
+  );
 
 module.exports = {
   darkMode: 'media',
@@ -8,8 +16,10 @@ module.exports = {
   plugins: [
     plugin(({ addBase }) => {
       addBase({
-        ':root': themeVariables('light'),
-        '@media (prefers-color-scheme: dark)': { ':root': themeVariables('dark') },
+        ':root': { ...themeVariables('light'), ...noteVariables('light') },
+        '@media (prefers-color-scheme: dark)': {
+          ':root': { ...themeVariables('dark'), ...noteVariables('dark') },
+        },
       });
     }),
   ],

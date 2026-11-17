@@ -6,10 +6,7 @@ import { formatTime } from '@/lib/time';
 import { ListMark, NoteMark } from '../icons';
 import { Check } from '../ui';
 import type { CalendarItem } from './entries';
-
-export const HOUR_H = 64;
-export const PX_PER_MIN = HOUR_H / 60;
-export const MIN_BLOCK_MIN = 20;
+import { MIN_BLOCK_MIN, PX_PER_MIN } from './grid';
 
 type PointerHandler = (e: PointerEvent<HTMLDivElement>) => void;
 
@@ -71,7 +68,15 @@ function Title({
   );
 }
 
-function Tinted({ done, lifted, children }: { done: boolean; lifted?: boolean; children: ReactNode }) {
+function Tinted({
+  done,
+  lifted,
+  children,
+}: {
+  done: boolean;
+  lifted?: boolean;
+  children: ReactNode;
+}) {
   return (
     <div className={`h-full rounded-lg bg-card ${lifted ? 'shadow-lg' : ''}`}>
       <div
@@ -139,7 +144,9 @@ export function Block({
       }}
     >
       <Tinted done={item.done} lifted={lifted}>
-        <div className={`flex min-w-0 flex-1 flex-col pl-2 pr-1.5 ${compact ? 'justify-center' : 'py-1'}`}>
+        <div
+          className={`flex min-w-0 flex-1 flex-col pl-2 pr-1.5 ${compact ? 'justify-center' : 'py-1'}`}
+        >
           <div className="flex h-[18px] items-center">
             <Title item={item} editing={editing} onEditDone={onEditDone} />
             {compact && (

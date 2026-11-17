@@ -11,6 +11,19 @@ const db = new PowerSyncDatabase({
   database: { dbFilename: 'planner.db', vfs: 'auto' },
 });
 
+db.registerListener({
+  statusChanged: (s) => {
+    const { downloadError, uploadError } = s.dataFlowStatus;
+    if (downloadError) console.warn('[sync] Download error:', downloadError);
+    if (uploadError) console.warn('[sync] Upload error:', uploadError);
+    if (import.meta.env.DEV) {
+      console.log(
+        `[sync] connected=${s.connected} connecting=${s.connecting} downloading=${s.dataFlowStatus.downloading} hasSynced=${s.hasSynced}`,
+      );
+    }
+  },
+});
+
 const DATA_VERSION = 2;
 
 const migrations: Record<number, (tx: Transaction) => Promise<void>> = {};
@@ -44,6 +57,7 @@ const readRows = async (): Promise<StoredRows> => ({
 });
 
 export async function openDatabase(userId: string): Promise<StoredRows> {
+  if (import.meta.env.DEV) console.log('[auth] Signed in as user', userId);
   await db.init();
   const version = await getMeta('data_version');
   if (version) await migrate(Number(version));

@@ -15,7 +15,8 @@ import { addDays, dateKey, formatHour, MINUTES_PER_DAY, startOfWeek } from '@/li
 
 import { ChevronLeft, ChevronRight } from '../icons';
 import { bucketByDay, type CalendarItem } from './entries';
-import { Block, Chip, HOUR_H, MIN_BLOCK_MIN, PX_PER_MIN } from './items';
+import { HOUR_H, MIN_BLOCK_MIN, PX_PER_MIN } from './grid';
+import { Block, Chip } from './items';
 import { layoutColumns } from './layout';
 
 const SNAP_MIN = 15;
@@ -26,8 +27,7 @@ const HOURS = Array.from({ length: 23 }, (_, i) => i + 1);
 type Mode = 'day' | 'week';
 
 type Target =
-  | { kind: 'grid'; day: number; start: number; end: number }
-  | { kind: 'allDay'; day: number };
+  { kind: 'grid'; day: number; start: number; end: number } | { kind: 'allDay'; day: number };
 
 interface Drag extends CalendarItem {
   action: 'move' | 'resize';
